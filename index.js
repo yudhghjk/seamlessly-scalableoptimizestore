@@ -1,17 +1,20 @@
-function combinationSum3(k, n) {
+function zigzagLevelOrder(root) {
+  if (!root) return [];
   const result = [];
-  backtrack([], 1, k, n);
-  return result;
-  function backtrack(combination, start, k, n) {
-    if (n === 0 && k === 0) {
-      result.push([...combination]);
-      return;
+  const queue = [root];
+  let zigzag = false;
+  while (queue.length) {
+    const levelSize = queue.length;
+    const currentLevel = [];
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift();
+      if (zigzag) currentLevel.unshift(node.val);
+      else currentLevel.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
     }
-    if (n < 0 || k === 0) return;
-    for (let i = start; i <= 9; i++) {
-      combination.push(i);
-      backtrack(combination, i + 1, k - 1, n - i);
-      combination.pop();
-    }
+    result.push(currentLevel);
+    zigzag = !zigzag;
   }
+  return result;
 }
