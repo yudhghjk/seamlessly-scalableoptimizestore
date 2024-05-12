@@ -1,14 +1,15 @@
-function findRedundantConnection(edges) {
-  const parent = new Array(edges.length + 1).fill(-1);
-  for (const edge of edges) {
-    const u = find(parent, edge[0]);
-    const v = find(parent, edge[1]);
-    if (u === v) return edge;
-    parent[u] = v;
+const binarySearchIterative = (arr, target) => {
+  let left = 0;
+  let right = arr.length - 1;
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (arr[mid] === target) {
+      return mid;
+    } else if (arr[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
   }
-  return [];
-}
-function find(parent, i) {
-  if (parent[i] === -1) return i;
-  return find(parent, parent[i]);
-}
+  return -1;
+};
