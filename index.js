@@ -1,20 +1,25 @@
-function findItinerary(tickets) {
-  const graph = new Map();
-  for (const [from, to] of tickets) {
-    if (!graph.has(from)) graph.set(from, []);
-    graph.get(from).push(to);
-  }
-  for (const destinations of graph.values()) {
-    destinations.sort();
-  }
-  const result = [];
-  dfs("JFK");
-  return result.reverse();
-  function dfs(from) {
-    const destinations = graph.get(from);
-    while (destinations && destinations.length) {
-      dfs(destinations.shift());
+const cocktailShakerSort = (arr) => {
+  let swapped = true;
+  let start = 0;
+  let end = arr.length - 1;
+  while (swapped) {
+    swapped = false;
+    for (let i = start; i < end; i++) {
+      if (arr[i] > arr[i + 1]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swapped = true;
+      }
     }
-    result.push(from);
+    if (!swapped) break;
+    swapped = false;
+    end--;
+    for (let i = end - 1; i >= start; i--) {
+      if (arr[i] > arr[i + 1]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swapped = true;
+      }
+    }
+    start++;
   }
-}
+  return arr;
+};
